@@ -40,22 +40,10 @@ if not hasAccess then
     main.AnchorPoint = Vector2.new(0.5,0.5)
     main.BackgroundColor3 = Color3.fromRGB(15,15,15)
     main.Parent = gui
-
     Instance.new("UICorner", main).CornerRadius = UDim.new(0, 12)
-
-    local grad = Instance.new("UIGradient", main)
-    grad.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(20,20,20)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(10,10,10))
-    }
-
     TweenService:Create(main, TweenInfo.new(0.4, Enum.EasingStyle.Back), {
         Size = UDim2.new(0, 340, 0, 220)
     }):Play()
-
-    local line = Instance.new("Frame", main)
-    line.Size = UDim2.new(1,0,0,2)
-    line.BackgroundColor3 = Color3.fromRGB(0,160,255)
 
     local title = Instance.new("TextLabel", main)
     title.Size = UDim2.new(1,0,0,50)
@@ -65,27 +53,16 @@ if not hasAccess then
     title.TextSize = 20
     title.TextColor3 = Color3.fromRGB(255,255,255)
 
-    local sub = Instance.new("TextLabel", main)
-    sub.Size = UDim2.new(1,0,0,20)
-    sub.Position = UDim2.new(0,0,0,35)
-    sub.BackgroundTransparency = 1
-    sub.Text = "Premium Access Required"
-    sub.Font = Enum.Font.Gotham
-    sub.TextSize = 12
-    sub.TextColor3 = Color3.fromRGB(130,130,130)
-
     local input = Instance.new("TextBox", main)
     input.Size = UDim2.new(0.8,0,0,40)
     input.Position = UDim2.new(0.1,0,0.45,0)
     input.BackgroundColor3 = Color3.fromRGB(25,25,25)
+    input.PlaceholderText = "Enter key..."
     input.Text = ""
-    input.PlaceholderText = "Enter your key..."
     input.Font = Enum.Font.Gotham
     input.TextSize = 14
     input.TextColor3 = Color3.new(1,1,1)
-
     Instance.new("UICorner", input).CornerRadius = UDim.new(0,10)
-    Instance.new("UIStroke", input).Color = Color3.fromRGB(40,40,40)
 
     local unlock = Instance.new("TextButton", main)
     unlock.Size = UDim2.new(0.8,0,0,35)
@@ -94,16 +71,8 @@ if not hasAccess then
     unlock.Font = Enum.Font.GothamBold
     unlock.TextSize = 14
     unlock.TextColor3 = Color3.new(1,1,1)
-
+    unlock.BackgroundColor3 = Color3.fromRGB(0,160,255)
     Instance.new("UICorner", unlock).CornerRadius = UDim.new(0,10)
-
-    local unlockGrad = Instance.new("UIGradient", unlock)
-    unlockGrad.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(0,160,255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(0,90,200))
-    }
-
-    Instance.new("UIStroke", unlock).Color = Color3.fromRGB(0,160,255)
 
     local getkey = Instance.new("TextButton", main)
     getkey.Size = UDim2.new(0.8,0,0,28)
@@ -113,9 +82,7 @@ if not hasAccess then
     getkey.TextSize = 12
     getkey.TextColor3 = Color3.fromRGB(200,200,200)
     getkey.BackgroundColor3 = Color3.fromRGB(30,30,30)
-
     Instance.new("UICorner", getkey).CornerRadius = UDim.new(0,10)
-    Instance.new("UIStroke", getkey).Color = Color3.fromRGB(60,60,60)
 
     local status = Instance.new("TextLabel", main)
     status.Size = UDim2.new(1,0,0,18)
@@ -129,26 +96,20 @@ if not hasAccess then
     getkey.MouseButton1Click:Connect(function()
         if setclipboard then
             setclipboard(GETKEY_LINK)
-            status.TextColor3 = Color3.fromRGB(100,255,100)
             status.Text = "Link copied!"
+            status.TextColor3 = Color3.fromRGB(100,255,100)
         else
             status.Text = "Clipboard not supported"
         end
     end)
 
     local unlocked = false
-
     unlock.MouseButton1Click:Connect(function()
         if input.Text == VALID_KEY then
-            status.TextColor3 = Color3.fromRGB(100,255,100)
             status.Text = "Access granted"
-
+            status.TextColor3 = Color3.fromRGB(100,255,100)
             unlocked = true
-
-            TweenService:Create(main, TweenInfo.new(0.3), {
-                Size = UDim2.new(0,0,0,0)
-            }):Play()
-
+            TweenService:Create(main, TweenInfo.new(0.3), {Size = UDim2.new(0,0,0,0)}):Play()
             task.wait(0.3)
             gui:Destroy()
             blur:Destroy()
